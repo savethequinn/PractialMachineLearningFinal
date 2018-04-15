@@ -1,0 +1,63 @@
+---
+title: "Activity Tracker Predicition"
+author: "Justin Owens"
+date: "April 14, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#trace(utils:::unpackPkgZip, edit=TRUE)
+library(data.table)
+library(caret)
+library(corrplot)
+library(plotly)
+library(ggplot2)
+```
+
+## Project Description
+
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website [here](http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har) (see the section on the Weight Lifting Exercise Dataset).
+
+The goal of your project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set. You may use any of the other variables to predict with. You should create a report describing how you built your model, how you used cross validation, what you think the expected out of sample error is, and why you made the choices you did. You will also use your prediction model to predict 20 different test cases.
+
+## Load Data
+
+First, we must **load** the data that will be used to create predicition models for fitness activity.
+
+```{r cars}
+if(!file.exists('./training_data.csv')){
+  download.file('https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv', './training_data.csv')
+  train_data = fread('./training_data.csv', sep = ',', na.strings = c('','NA','#DIV/0!'))
+} else {
+  train_data = fread('./training_data.csv', sep = ',', na.strings = c('','NA','#DIV/0!'))
+}
+if(!file.exists('./testing_data.csv')){
+  download.file('https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv', './testing_data.csv')
+  test_data = fread('./testing_data.csv', sep = ',', na.strings = c('','NA','#DIV/0!'))
+} else {
+  test_data = fread('./testing_data.csv', sep = ',', na.strings = c('','NA','#DIV/0!'))
+}
+```
+
+## Clean Data
+
+Before creating models, we need to ensure the data is clean and in the proper format.
+
+```{r clean, echo=TRUE}
+nums = names(train_data)[7:length(names(train_data))]
+for (j in nums){
+  train_data[,(j):= as.numeric(train_data[,(j)])]
+}
+```
+
+## Exploratory Analysis
+
+Placeholder for some exploratory analysis
+
+```{r explore, echo=TRUE}
+train_cor = cor(train_data)
+corrplot(train_cor, method = "color")
+```
+
+
