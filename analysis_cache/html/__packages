@@ -1,0 +1,12 @@
+base
+data.table
+lattice
+ggplot2
+caret
+corrplot
+plotly
+dplyr
+magrittr
+foreach
+iterators
+doParallel
